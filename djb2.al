@@ -4,21 +4,16 @@
   (export bytes (fun (start len)
     (block
       ;; if the length is 4, load as an int
-      (if (eq len 4)
-        (int (i32_load start))
+      (def hash 5381)
+      (def i 0)
+      (loop (lt i len)
         (block
-          (def hash 5381)
-          (def i 0)
-          (loop (lt i len)
-            (block
-              ;; usually implemented as hash << 5 + hash
-              ;; but this is the same perf (I measured it) in wasm
-              (set hash (add (mul hash 33) (i32_load8 (add start i)) ))
-              (set i (add i 1))
-          ))
-          hash
-        )
-      )
+          ;; usually implemented as hash << 5 + hash
+          ;; but this is the same perf (I measured it) in wasm
+          (set hash (add (mul hash 33) (i32_load8 (add start i)) ))
+          (set i (add i 1))
+      ))
+      hash
     )
   ))
 
