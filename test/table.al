@@ -14,7 +14,7 @@
 
     (assert (eq 0 (ht.get_entries t)) "should be empty")
 
-    (ht.set t k hello)
+    (assert (eq (ht.set t k hello) hello) "set returns value")
     (def v (ht.get t k))
 
     ;; not sure why: if assert is a macro it always crashes
