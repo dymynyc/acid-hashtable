@@ -75,8 +75,7 @@
     ;;(or is it better to return the object?
     ;;maybe useful in the case where we need to embiggen
     ;;the object)
-    _key
-    ;;value
+    value
   )))
 
   (export create create)
