@@ -1,0 +1,19 @@
+{
+  "name": "acid-hashtable",
+  "description": "",
+  "version": "1.0.0",
+  "homepage": "https://github.com/dymynyc/acid-hashtable",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dymynyc/acid-hashtable.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "^5.0.0"
+  },
+  "scripts": {
+    "test": "set -e; for t in test/*.js; do node $t; done && node run.js ./test/*.al"
+  },
+  "author": "@EMovhfIrFk4NihAKnRNhrfRaqIhBv1Wj8pTxJNgvCCY=.ed25519",
+  "license": "MIT"
+}
