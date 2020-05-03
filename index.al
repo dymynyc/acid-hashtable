@@ -83,5 +83,21 @@
   (export set set_key)
   (export has has_key)
 
+
+  ;;there is something wrong with macros.
+  ;;this macro doesn't work right (can't resolve get_key etc)
+  ;;if imported into another module.
+  ;;hmm, also, it's annoying that function names are replaced
+  ;;in the wasm. I'm sure that these are related.
+
+;;  (export set_if   ;;macro that sets returns current value or sets
+;;    (mac (table key value) &(block
+;;      (def k $key) ;;define k so we don't re-eval $key
+;;      (if (has_key $table k)
+;;        (get_key $table k)
+;;        (set_key $table k $value) ) ;;not $value only runs if has fails
+;;    )))
+
+
   (export get_entries (fun (table) (get_entries table)))
 )

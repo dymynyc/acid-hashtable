@@ -55,4 +55,28 @@
     (assert (eq 0 (ht.has t k2)) "hash table doesn't have k2")
   }))
 
+  ;;macro that sets returns current value or sets
+  (def set_if (mac (table key value) &(block
+    (def k $key) ;;define k so we don't re-eval $key
+    (if (ht.has $table k)
+      (ht.get $table k)
+      (ht.set $table k $value) ) ;;not $value only runs if has fails
+  )))
+
+  (export test_set_if (fun () {block
+    (def size 64)
+    (def t (ht.create 64 0))
+    (def k (djb2.int 100))
+    (def a "A")
+    (def b "B")
+    (def i 0)
+    ;;find a second key that collides with the first (within table)
+    (assert (eq 0 (ht.has t k)) "initially unset")
+    (assert (eq a (set_if t k a)) "set_if sets if unset")
+    (assert (eq 1 (ht.has t k)) "set after set_if set")
+    (assert (eq a (set_if t k b)) "reset doesn\'t set")
+    (assert (eq a (ht.get t k)) "still the same")
+
+
+  }))
 )
