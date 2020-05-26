@@ -1,20 +1,14 @@
 (module
+  (def reducers (import "acid-reducers"))
   ;;this would be a good candidate for unrolling.
   ;;in the cases where you know the length
   (export bytes (fun (start len)
-    (block
-      ;; if the length is 4, load as an int
-      (def hash 5381)
-      (def i 0)
-      (loop (lt i len)
-        (block
-          ;; usually implemented as hash << 5 + hash
-          ;; but this is the same perf (I measured it) in wasm
-          (set hash (add (mul hash 33) (i32_load8 (add start i)) ))
-          (set i (add i 1))
-      ))
-      hash
-    )
+    ;; if the length is 4, load as an int
+    ;; usually implemented as hash << 5 + hash
+    ;; but *33 is the same perf (I measured it) in wasm
+    (reducers.range start (add start len) 5381 (fun (hash ptr) 
+      (add (mul 33 hash) (i32_load8 ptr))
+    ))
   ))
 
   ;;this is quite a bit faster, if you are hashing an int.
