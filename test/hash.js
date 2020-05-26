@@ -76,10 +76,10 @@ tape('incremental, inside wasm', function (t) {
     h2 = djb2.int(h2)
   console.log('jsloop  : ops/s', N / ((Date.now()-start)/1000))
 
-  var h3 = djb2.bench_bytes(N)
+  var h3 = djb2.bench_bytes(N, 1024, 4)
   console.log('byteloop: ops/s', N / ((Date.now()-start)/1000))
 
-  t.equal(h1, h2)
-  t.equal(h1, h3)
+  t.equal(h2, h1)
+  t.equal(h3, h1)
   t.end()
 })
